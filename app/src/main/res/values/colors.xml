@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2D2D2D</color>
+    <color name="colorPrimaryDark">	#232323</color>
+    <color name="colorAccent">#2D2D2D</color>
+
+    <color name="ucrop_color_toolbar">#f26</color>
+    <color name="ucrop_color_statusbar">#f26</color>
+    <color name="ucrop_color_toolbar_widget">#f26</color>
+
+    <color name="ucrop_color_widget_active">#ffffff</color>
+    <color name="ucrop_color_active_controls_color">#ffffff</color>
+    <color name="ucrop_color_widget_rotate_mid_line">#f26</color>
+    <color name="ucrop_color_widget_background">#f26</color>
+</resources>
