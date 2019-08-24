@@ -7,5 +7,5 @@ Android Studio 3.2 or higher
 
 ## Screenshots of app -
 
-![MainScreen](https://user-images.githubusercontent.com/6271062/63639546-247a8b80-c6b2-11e9-84d6-cbbebb55e12a.png)
-![ImageCrop](https://user-images.githubusercontent.com/6271062/63639554-32301100-c6b2-11e9-81db-86bdec926f37.png)
+![MainScreen50](https://user-images.githubusercontent.com/6271062/63639581-b5516700-c6b2-11e9-9149-e403829a154b.png)
+![ImageCrop50](https://user-images.githubusercontent.com/6271062/63639585-c1d5bf80-c6b2-11e9-9767-681960cd5c1a.png)
