@@ -27,21 +27,21 @@ class ImageDatabaseHelper {
     fun add(context: Context, title: String, coverPhotoURL: Uri) {
         databaseReference = FirebaseDatabase.getInstance().getReference(Config.DATABASE_REFERENCE)
         Config.showToast(Config.IMAGE_ADDING_MESSAGE, context)
-        databaseReference!!.addListenerForSingleValueEvent(object : ValueEventListener {
+        databaseReference?.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val uniqueKey = databaseReference!!.push().key
-                storageReference = FirebaseStorage.getInstance().reference.child(uniqueKey!!).child(Config.STORAGE_PATH + coverPhotoURL.lastPathSegment!!)
-                val storageTask = storageReference!!.putFile(coverPhotoURL)
-                val uriTask = storageTask.continueWithTask { taskSnapshot ->
+                val uniqueKey = databaseReference?.push()?.key
+                storageReference = uniqueKey?.let { FirebaseStorage.getInstance().reference.child(it).child(Config.STORAGE_PATH + coverPhotoURL.lastPathSegment) }
+                val storageTask = storageReference?.putFile(coverPhotoURL)
+                val uriTask = storageTask?.continueWithTask { taskSnapshot ->
                     if (!taskSnapshot.isSuccessful) {
                         throw taskSnapshot.exception!!
                     }
-                    storageReference!!.downloadUrl
-                }.addOnCompleteListener { task ->
+                    storageReference?.downloadUrl
+                }?.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val downloadURi = task.result
-                        val image = Image(title, downloadURi!!.toString())
-                        databaseReference!!.child(uniqueKey).setValue(image)
+                        val image = downloadURi?.toString()?.let { Image(title, it) }
+                        uniqueKey?.let { databaseReference?.child(it)?.setValue(image) }
                         Config.showToast(Config.IMAGE_ADD_SUCCESS_MSG, context)
                     }
                     val intent = Intent(context, MainActivity::class.java)
@@ -66,14 +66,14 @@ class ImageDatabaseHelper {
         databaseReference = FirebaseDatabase.getInstance().getReference(Config.DATABASE_REFERENCE)
         loader.visibility = View.VISIBLE
         if (Config.isNetworkAvailable(context)) {
-            databaseReference!!.addValueEventListener(object : ValueEventListener {
+            databaseReference?.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (anyImageExists(dataSnapshot)) {
                         images.clear()
                         for (snapshot in dataSnapshot.children) {
                             val image = snapshot.getValue(Image::class.java)
-                            image!!.id = snapshot.key
-                            images.add(image)
+                            image?.id = snapshot.key
+                            image?.let { images.add(it) }
                         }
                         val movieListAdapter = MovieListGridRecyclerAdapter()
                         imageGallery.adapter = movieListAdapter

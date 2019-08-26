@@ -114,7 +114,7 @@ class ImagePickerActivity : AppCompatActivity() {
                 setResultCancelled()
             }
             REQUEST_GALLERY_IMAGE -> if (resultCode == Activity.RESULT_OK) {
-                val imageUri = data!!.data
+                val imageUri = data?.data
                 cropImage(imageUri)
             } else {
                 setResultCancelled()
@@ -125,8 +125,8 @@ class ImagePickerActivity : AppCompatActivity() {
                 setResultCancelled()
             }
             UCrop.RESULT_ERROR -> {
-                val cropError = UCrop.getError(data!!)
-                Log.e(TAG, "Crop error: " + cropError!!)
+                val cropError = data?.let { UCrop.getError(it) }
+                Log.e(TAG, "Crop error: " + cropError)
                 setResultCancelled()
             }
             else -> setResultCancelled()
@@ -149,9 +149,11 @@ class ImagePickerActivity : AppCompatActivity() {
         if (setBitmapMaxWidthHeight)
             options.withMaxResultSize(bitmapMaxWidth, bitmapMaxHeight)
 
-        UCrop.of(sourceUri!!, destinationUri)
+        sourceUri?.let {
+            UCrop.of(it, destinationUri)
                 .withOptions(options)
                 .start(this)
+        }
     }
 
     private fun handleUCropResult(data: Intent?) {
@@ -219,7 +221,7 @@ class ImagePickerActivity : AppCompatActivity() {
 
         @SuppressLint("Recycle")
         private fun queryName(resolver: ContentResolver, uri: Uri?): String {
-            val returnCursor = resolver.query(uri!!, null, null, null, null)!!
+            val returnCursor = resolver.query(uri, null, null, null, null)
             val nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
             returnCursor.moveToFirst()
             val name = returnCursor.getString(nameIndex)

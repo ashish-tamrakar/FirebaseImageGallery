@@ -126,7 +126,7 @@ class AddImageActivity : AppCompatActivity(), View.OnClickListener {
 
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
-                val uri = data!!.getParcelableExtra<Uri>("path")
+                val uri = data?.getParcelableExtra<Uri>("path")
                 try {
                     // You can update this bitmap to your server
                     //                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
@@ -134,7 +134,7 @@ class AddImageActivity : AppCompatActivity(), View.OnClickListener {
                     // loading profile image from local cache
                     //                    loadProfile(uri.toString());
                     coverPhotoURL = uri
-                    image_cover!!.setImageURI(uri)
+                    image_cover?.setImageURI(uri)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -145,12 +145,12 @@ class AddImageActivity : AppCompatActivity(), View.OnClickListener {
 
     // add new Image
     private fun newImage() {
-        val getTitle = image_title_field!!.text.toString()
-        val isTitleEmpty = image_title_field!!.text.toString().isEmpty()
+        val getTitle = image_title_field?.text.toString()
+        val isTitleEmpty = image_title_field?.text.toString().isEmpty()
         val isNullPhotoURL = coverPhotoURL == null
 
         if (isTitleEmpty) {
-            image_title_field!!.error = Config.TITLE_EMPTY_MESSAGE
+            image_title_field?.error = Config.TITLE_EMPTY_MESSAGE
         }
 
         if (isNullPhotoURL) {
@@ -159,7 +159,7 @@ class AddImageActivity : AppCompatActivity(), View.OnClickListener {
 
         if (!isTitleEmpty && !isNullPhotoURL) {
             imageDatabaseHelper = ImageDatabaseHelper()
-            coverPhotoURL?.let { imageDatabaseHelper!!.add(applicationContext, getTitle, it) }
+            coverPhotoURL?.let { imageDatabaseHelper?.add(applicationContext, getTitle, it) }
         }
     }
 
