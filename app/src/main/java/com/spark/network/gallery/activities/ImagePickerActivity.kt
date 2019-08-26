@@ -27,12 +27,25 @@ import java.io.File
 
 class ImagePickerActivity : AppCompatActivity() {
 
+    /* For locking aspect ratio of Image */
     private var lockAspectRatio = false
+
+    /* Variable for setting bitmap max width and height. */
     private var setBitmapMaxWidthHeight = false
+
+    /* Variable for ratio X */
     private var ratioX = 16
+
+    /* Variable for ratio Y */
     private var ratioY = 9
+
+    /* Holds max width of bitmap */
     private var bitmapMaxWidth = 1000
+
+    /* This holds max height of bitmap */
     private var bitmapMaxHeight = 1000
+
+    /* Image compression quality variable */
     private var imageCompression = 80
 
     interface PickerOptionListener {
@@ -66,6 +79,9 @@ class ImagePickerActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * This function checks for Camera and Storage permissions and launches Image Capture Intent.
+     * */
     private fun takeCameraImage() {
         Dexter.withActivity(this)
                 .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -87,6 +103,9 @@ class ImagePickerActivity : AppCompatActivity() {
                 }).check()
     }
 
+    /**
+     * This method also checks for Camera and Storage permission and launches Intent to choose image.
+     * */
     private fun chooseImageFromGallery() {
         Dexter.withActivity(this)
                 .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -133,6 +152,9 @@ class ImagePickerActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     *  This function sets the Image Compression quality integer and starts UCrop for image cropping.
+     * */
     private fun cropImage(sourceUri: Uri?) {
         val destinationUri = Uri.fromFile(File(cacheDir, queryName(contentResolver, sourceUri)))
         val options = UCrop.Options()
@@ -156,6 +178,9 @@ class ImagePickerActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Function to handle Crop Results.
+     * */
     private fun handleUCropResult(data: Intent?) {
         if (data == null) {
             setResultCancelled()
@@ -165,6 +190,9 @@ class ImagePickerActivity : AppCompatActivity() {
         setResultOk(resultUri)
     }
 
+    /**
+     * Function to set the result OK.
+     * */
     private fun setResultOk(imagePath: Uri?) {
         val intent = Intent()
         intent.putExtra("path", imagePath)
@@ -172,12 +200,19 @@ class ImagePickerActivity : AppCompatActivity() {
         finish()
     }
 
+    /**
+     * Function to set the result CANCELLED.
+     * */
     private fun setResultCancelled() {
         val intent = Intent()
         setResult(Activity.RESULT_CANCELED, intent)
         finish()
     }
 
+    /**
+     * Function to set the Cache Image path.
+     * @param fileName - This String variable holds the name of image path.
+     * */
     private fun getCacheImagePath(fileName: String): Uri {
         val path = File(externalCacheDir, "camera")
         if (!path.exists()) path.mkdirs()

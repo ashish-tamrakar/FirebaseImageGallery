@@ -8,8 +8,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.spark.network.gallery.models.Image
 import kotlinx.android.synthetic.main.custom_gallery_layout.view.*
 
-
 class MovieListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
     fun bindView(movieModel: Image) {
         itemView.title.text = movieModel.title
         Glide.with(itemView.context)

@@ -15,7 +15,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity(){
+    /* ArrayList to hold the Images. */
     private var images: ArrayList<Image> = ArrayList()
+
+    /* ImageDatabaseHelper instance variable. */
     private var imageDatabaseHelper: ImageDatabaseHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

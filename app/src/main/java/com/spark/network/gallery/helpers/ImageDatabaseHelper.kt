@@ -20,7 +20,11 @@ import com.wang.avi.AVLoadingIndicatorView
 import java.util.*
 
 class ImageDatabaseHelper {
+
+    /* It holds DatabaseReference */
     private var databaseReference: DatabaseReference? = null
+
+    /* This holds Storage Reference */
     private var storageReference: StorageReference? = null
 
     // add new Image into the firebase database

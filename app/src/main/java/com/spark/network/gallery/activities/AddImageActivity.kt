@@ -20,10 +20,15 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.spark.network.gallery.activities.ImagePickerActivity.Companion.showImagePickerOptions
 import kotlinx.android.synthetic.main.activity_add_image.*
 
 class AddImageActivity : AppCompatActivity(), View.OnClickListener {
+
+    /* Variable for cover photo URL */
     private var coverPhotoURL: Uri? = null
+
+    /* ImageDatabaseHelper instance variable */
     private var imageDatabaseHelper: ImageDatabaseHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,8 +86,11 @@ class AddImageActivity : AppCompatActivity(), View.OnClickListener {
         builder.show()
     }
 
+    /**
+     * Showing Image picker option by launching the camera or Image chooser.
+     * */
     private fun showImagePickerOptions() {
-        ImagePickerActivity.showImagePickerOptions(this, object : ImagePickerActivity.PickerOptionListener {
+        showImagePickerOptions(this, object : ImagePickerActivity.PickerOptionListener {
             override fun onTakeCameraSelected() {
                 launchCameraIntent()
             }
@@ -93,6 +101,9 @@ class AddImageActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
+    /**
+     * This function launches the camera intent with startActivityForResult and the callback will be thrown.
+     * */
     private fun launchCameraIntent() {
         val intent = Intent(this@AddImageActivity, ImagePickerActivity::class.java)
         intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_IMAGE_CAPTURE)
@@ -110,6 +121,9 @@ class AddImageActivity : AppCompatActivity(), View.OnClickListener {
         startActivityForResult(intent, REQUEST_IMAGE)
     }
 
+    /**
+     * This function launches the Gallery intent for choose image and throws a callback.
+     * */
     private fun launchGalleryIntent() {
         val intent = Intent(this@AddImageActivity, ImagePickerActivity::class.java)
         intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_GALLERY_IMAGE)
